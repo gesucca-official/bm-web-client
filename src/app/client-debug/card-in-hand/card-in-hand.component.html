@@ -1,0 +1,48 @@
+<mat-accordion style="padding: 5px">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title [ngStyle]="{'color': getColor()}">
+        {{cardData.name}}
+      </mat-panel-title>
+      <mat-panel-description class="right-aligned">
+        <button mat-raised-button
+                color="accent"
+                style="height: fit-content"
+                [disabled]="!gameService.isPlayable(cardData, character)"
+                (click)="playThis(); $event.stopPropagation();">
+          Play
+        </button>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ul>
+      <li *ngFor="let mapEntry of cardData.cost | keyvalue; let last = isLast">
+        <b>{{mapEntry.key}}</b>: {{mapEntry.value}}
+      </li>
+    </ul>
+
+    <p [innerHTML]="cardData.effect"></p>
+
+    <form>
+      <mat-form-field style="float: left; margin-left: 10px;" color="accent">
+        <mat-label>Target</mat-label>
+        <mat-select [(value)]="chosenTarget">
+          <mat-option *ngFor="let target of targets" [value]="target">
+            {{target}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="cardData.characterBound" style="float: left; margin-left: 10px;" color="accent">
+        <mat-label>Discard</mat-label>
+        <mat-select [(value)]="cardToDiscard">
+          <mat-option *ngFor="let discardableCard of discardableCards" [value]="discardableCard">
+            {{discardableCard}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+    <button mat-raised-button class="mat-elevation-z2" style="float: right" (click)="logState()">Log Card</button>
+  </mat-expansion-panel>
+</mat-accordion>

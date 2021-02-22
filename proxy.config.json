@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "pathRewrite": {"^/api": "/bm-rest-api/v1"},
+    "secure": false
+  }
+}

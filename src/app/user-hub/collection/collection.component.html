@@ -1,0 +1,44 @@
+<ngx-loading [show]="sessionService.isWaitingForUserAccountData" [config]="{fullScreenBackdrop: true}"></ngx-loading>
+<div class="tabbed" *ngIf="!sessionService.isWaitingForUserAccountData"><br>
+
+  <div fxLayout="row wrap" fxLayoutGap="10px grid" fxFlexAlign="stretch" *ngIf="!editing">
+    <div fxFlex="20%" fxFlex.md="25%" fxFlex.sm="33%" fxFlex.xs="50%"
+         *ngFor="let deck of sessionService.userAccountData.decks">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title>{{deck.deckId}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <img mat-card-image src="assets/img/deck.png" alt="Deck Icon">
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="editDeck(deck)">
+            Edit
+          </button>
+          <button mat-raised-button color="primary" (click)="deleteDeck(deck)">
+            Delete
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div fxFlex="20%" fxFlex.md="25%" fxFlex.sm="33%" fxFlex.xs="50%">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title>New Deck</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <img mat-card-image src="assets/img/deck.png" alt="Deck Icon">
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="newDeck()">
+            Create
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+
+  <app-edit-deck *ngIf="editing" [deck]="targetDeck" (exit)="editing = false" (saveDeck)="saveDeck($event)">
+  </app-edit-deck>
+
+</div><br>

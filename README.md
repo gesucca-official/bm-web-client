@@ -1,27 +1,34 @@
-# BmWebClient
+# BOTTE MICIDIALI Web Client
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
+Botte Micidiali is a card game of my own invention. It shamelessly robs some elements from other successful card games such as Magic: The Gathering, Yu-Gi Oh!, Hearthstone and the such, but it includes some concepts and mechanics never seen before. 
 
-## Development server
+## What's this?
+Botte Micidiali is a card game that mimics what happens in a street brawl among big, bad and ugly thugs. Cards represents the character you play, actions you can do and objects you can use to kill others and remain alive yourself.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Up to five bad guys play their cards all at the same time, performing actions on others or objects around them. Knowing who to attack and when to do it, rather than defending or buffing oneself is a crucial skill. 
 
-## Code scaffolding
+## State of the Project
+```
+// TODO: write a sensible README for this project
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+I don't think I need to elaborate further about this.
 
-## Build
+## License 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+All rights reserved.
 
-## Running unit tests
+*All*.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+*Rights*.
 
-## Running end-to-end tests
+*Reserved*.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Yeah, that's it. I will not grant any License on this code, at least until I have *perfectly clear* where this entire thing is going to end. If any of you have anything to say on the matter that might make me change my mind, please do by all means.
 
-## Further help
+## Contributions
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+I am of course well inclined to accept contributions, but be aware there is no such thing as a predefined Contributor License Agreement. 
+
+Please contact me if you are interested in such matters; otherwise, I will simply accept any good Pull Requests as donations, write a thing or two about the contributor somewhere in the app itself and call it a day. 
+

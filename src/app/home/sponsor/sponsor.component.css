@@ -1,0 +1,23 @@
+.container {
+  width: fit-content;
+  margin: auto auto;
+}
+
+.title {
+  font-size: medium;
+  margin-bottom: 0;
+}
+
+.sponsor {
+  width: 200px;
+  height: auto;
+}
+
+/*style mat snackbar*/
+.mat-snack-bar-container.sponsor {
+  background-color: rgba(130, 190, 185, 0.85);
+}
+
+.mat-snack-bar-handset {
+  width: fit-content;
+}

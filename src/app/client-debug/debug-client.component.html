@@ -1,0 +1,20 @@
+<div *ngIf="!gameService.graphicClient && gameService.gameState" class="tabbed">
+  <div fxLayout="row wrap" fxLayoutGap="5px grid">
+    <app-character-card fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%"
+                        [isPlayer]="true"
+                        [playerState]="gameService.playerState"></app-character-card>
+    <app-character-card fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let opponent of gameService.opponents"
+                        [isPlayer]="false"
+                        [playerState]="opponent"></app-character-card>
+  </div>
+  <br>
+  <app-card-in-hand *ngFor="let card of gameService.cardsInHand"
+                    [cardData]="card"
+                    [targets]="gameService.getTargets(card)"
+                    [chosenTarget]="gameService.getTargets(card)[0]"
+                    [discardableCards]="discardableCards()"
+                    [cardToDiscard]="discardableCards()[0]"
+                    [character]="gameService.playerState.character"
+                    (onPlayThis)="playCard($event)"></app-card-in-hand>
+</div>
+<ngx-loading [show]="sessionService.isLoadingGame" [config]="{fullScreenBackdrop: true}"></ngx-loading>

@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Choose Deck</h1>
+<div mat-dialog-content>
+  <mat-form-field color="accent">
+    <mat-label>Deck</mat-label>
+    <mat-select [(value)]="chosenDeck">
+      <mat-option *ngFor="let deck of sessionService.userAccountData.decks" [value]="deck">
+        {{deck.deckId}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button class="mat-elevation-z2" (click)="ok()" [disabled]="chosenDeck == null">
+    OK
+  </button>
+</div>

@@ -1,0 +1,5 @@
+<h1 mat-dialog-title>{{dialogData.title}}</h1>
+<div mat-dialog-content>
+  <div [innerHTML]="dialogData.html"></div>
+  <button mat-raised-button class="mat-elevation-z2" (click)="logRawJson()">Log JSON</button>
+</div>

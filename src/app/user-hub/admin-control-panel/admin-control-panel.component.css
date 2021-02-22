@@ -1,0 +1,13 @@
+.chooser-card {
+  width: fit-content;
+  margin: 5px auto;
+}
+
+.choice-button {
+  margin-left: 5px;
+}
+
+.smaller-title {
+  font-size: medium;
+  margin-top: 5px;
+}

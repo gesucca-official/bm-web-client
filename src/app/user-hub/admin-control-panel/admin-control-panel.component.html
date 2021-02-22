@@ -1,0 +1,22 @@
+<mat-card class="chooser-card">
+  <mat-card-title class="smaller-title">
+    Logged Games
+  </mat-card-title>
+  <mat-card-content>
+    Games logged so far: {{loggedGamesQty}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+            class="choice-button"
+            color="primary"
+            (click)="showUnfinished(); $event.stopPropagation()">
+      Show Unfinished
+    </button>
+    <button mat-raised-button
+            class="choice-button"
+            color="primary"
+            (click)="drainLog(); $event.stopPropagation()">
+      Download All
+    </button>
+  </mat-card-actions>
+</mat-card>

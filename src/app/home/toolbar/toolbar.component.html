@@ -1,0 +1,8 @@
+<mat-toolbar class="toolbar mat-elevation-z10">
+  <span>{{showTitle() ? 'BOTTE MICIDIALI' : sessionService.userAccountData.username.toUpperCase()}}</span>
+  <span style="flex: 1 1 auto;"></span>
+  <span *ngIf="showTitle()">-alpha-</span>
+  <span *ngIf="!showTitle()">
+  <button mat-raised-button class="mat-elevation-z4" (click)="logOut()">Log Out</button>
+  </span>
+</mat-toolbar>

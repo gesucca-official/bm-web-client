@@ -1,0 +1,86 @@
+<app-toolbar></app-toolbar>
+<mat-card class="presentation-card mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>What's This?</mat-card-title>
+    <mat-card-subtitle>About this Project</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      Hi everyone. I am <a style="color: rgb(130, 190, 185)" [matMenuTriggerFor]="aboutMe">gesucca</a> and I made this -
+      among others countless things.
+    </p>
+    <mat-menu #aboutMe="matMenu">
+      <button mat-menu-item (click)="instagramLink()">
+        <i class="fab fa-instagram"></i> Instagram
+      </button>
+      <button mat-menu-item (click)="youtubeLink()">
+        <i class="fab fa-youtube"></i> Youtube
+      </button>
+    </mat-menu>
+    <p>
+      <b>Botte Micidiali</b> is a card game of my own invention. It shamelessly robs some elements from other
+      successful card games such as Magic: The Gathering, Yu-Gi Oh!, Hearthstone and the such, but it includes some
+      concepts and mechanics never seen before.
+    </p>
+    <p>
+      For now, you can help me sponsoring a virtual cup of coffee, or just by telling me if you discover some weird
+      behaviour.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" onClick="window.location.href = 'mailto:gesucca.official@gmail.com'">
+      Send me a Mail
+    </button>
+    <button mat-raised-button color="primary" onClick="window.open('https://www.paypal.com/paypalme/gesucca/')">
+      Support This
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="presentation-card mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>How do I play?</mat-card-title>
+    <mat-card-subtitle>About this Game</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      <b>Botte Micidiali</b> is a card game that mimics what happens in a street brawl among big, bad and ugly thugs.
+      Cards represents the character you play, actions you can do and objects you can use to kill others and remain
+      alive yourself.
+    </p>
+    <p>
+      Up to five bad guys play their cards all at the same time, performing actions on others or objects around them.
+      Knowing who to attack and when to do it, rather than defending or buffing oneself is a crucial skill.
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button class="choice-button mat-elevation-z10"
+            color="primary"
+            routerLink="/rules"
+            routerLinkActive="active">
+      Read Rules
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<div fxLayout="row wrap" fxLayoutGap="5px grid">
+  <mat-card class="chooser-card">
+    <mat-card-header>
+      <mat-card-title class="smaller-title">
+        Play the Game
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <button mat-raised-button color="accent" class="choice-button"
+              routerLink="/hub"
+              routerLinkActive="active">
+        Log In
+      </button>
+      <button mat-raised-button color="primary" class="choice-button"
+              routerLink="/sign-up"
+              routerLinkActive="active">
+        Register
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>

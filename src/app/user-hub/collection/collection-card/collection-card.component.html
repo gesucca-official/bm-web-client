@@ -1,0 +1,9 @@
+<mat-card class="collection-card mat-elevation-z4">
+  <mat-card-header class="collection-card-header">
+    <mat-card-title class="smaller-title">{{card.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-image src="assets/img/cards/{{card.image}}" alt="Card Image">
+  <mat-card-content>
+    <p [innerHTML]="card.effect"></p>
+  </mat-card-content>
+</mat-card>

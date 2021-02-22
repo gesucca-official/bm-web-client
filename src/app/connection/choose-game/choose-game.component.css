@@ -1,0 +1,35 @@
+.tabbed {
+  width: 90%;
+  margin: 0 auto;
+}
+
+mat-expansion-panel {
+  width: 85%;
+  margin: 10px auto;
+}
+
+mat-panel-description.right-aligned {
+  flex-grow: 0;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.chooser-card {
+  width: fit-content;
+  margin: 5px auto;
+}
+
+.choice-button {
+  margin-left: 5px;
+}
+
+.smaller-title {
+  font-size: medium;
+  margin-top: 5px;
+}

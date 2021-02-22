@@ -1,0 +1,43 @@
+<mat-card class="character-card">
+  <mat-card-header [ngStyle]="{'color': isPlayer ? '#fff176' : ''}">
+    <mat-card-title>
+      {{playerState.playerId}}
+      <b style="color: red" *ngIf="playerState.character.dead">DEAD</b>
+    </mat-card-title>
+    <mat-card-subtitle>{{playerState.character.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+
+    <p>
+      <b>HP</b>: {{health}}
+      <b>AP</b>: {{alertness}}
+    </p>
+
+    <div *ngFor="let mapEntry of otherResources | keyvalue">
+      <div *ngIf="mapEntry.value > 0">
+        <b>{{mapEntry.key}}</b>: {{mapEntry.value}}
+      </div>
+    </div>
+
+    <br>
+
+    <p *ngFor="let timer of playerState.character.timers">
+      TIMERS: <b>{{timer.name}}</b> ({{timer.timer}})
+    </p>
+
+    <p *ngFor="let status of playerState.character.statuses">
+      STATUS: <b>{{status.name}}</b> <br> ({{status.description}})
+    </p>
+
+    <div style="width: 90%">
+      <button class="mat-button mat-elevation-z2"
+              *ngFor="let item of playerState.character.items"
+              (click)="logItem(item)">ITEM: <b>{{item.name}}</b>
+      </button>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button class="mat-button mat-elevation-z2" (click)="logState()">Log State</button>
+  </mat-card-actions>
+</mat-card>

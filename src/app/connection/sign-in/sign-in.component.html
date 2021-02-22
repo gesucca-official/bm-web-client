@@ -1,0 +1,24 @@
+<mat-card class="input-card">
+  <ngx-loading [show]="isLoading"></ngx-loading>
+  <mat-form-field class="input-element">
+    <mat-label>Player ID</mat-label>
+    <input matInput type="text"
+           [disabled]="websocketService.isConnected()"
+           [(ngModel)]="playerId"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+  <mat-form-field class="input-element">
+    <mat-label>Password</mat-label>
+    <input matInput type="password"
+           [disabled]="websocketService.isConnected()"
+           [(ngModel)]="password"
+           [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+  <button mat-raised-button
+          color="accent"
+          class="input-element"
+          (click)="logIn()"
+          [disabled]="playerId == null || password == null || websocketService.isConnected()">
+    Log In
+  </button>
+</mat-card>

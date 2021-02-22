@@ -1,0 +1,20 @@
+<app-toolbar></app-toolbar>
+<!--TODO this ng ifs are bad, create a sub router?-->
+<app-server-connection *ngIf="!websocketService.isConnected()"></app-server-connection>
+<mat-tab-group color="accent" backgroundColor="accent" *ngIf="websocketService.isConnected()">
+  <mat-tab label="Play">
+    <app-choose-game *ngIf="!gameService.gameState" (joinGameRequest)="bounceJoinGameEvent($event)"></app-choose-game>
+    <app-debug-client></app-debug-client>
+  </mat-tab>
+  <mat-tab label="Collection">
+    <app-collection></app-collection>
+  </mat-tab>
+  <mat-tab label="Profile">
+    <ul>
+      <li> {{sessionService.userAccountData.username}} </li>
+      <li> {{sessionService.userAccountData.email}} </li>
+      <li> {{sessionService.userAccountData.role}}  </li>
+    </ul>
+    <app-admin-control-panel *ngIf="sessionService.userAccountData.role === 'ADMIN'"></app-admin-control-panel>
+  </mat-tab>
+</mat-tab-group>

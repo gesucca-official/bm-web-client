@@ -1,0 +1,36 @@
+.selection-panel {
+  margin: 10px;
+}
+
+.deck-name-input {
+  margin-left: 10px;
+}
+
+.buttons {
+  display: flex;
+}
+
+mat-panel-description.right-aligned {
+  flex-grow: 0;
+}
+
+::ng-deep .mat-option {
+  font-family: Electrolize, sans-serif;
+}
+
+::ng-deep .mat-select {
+  font-family: Electrolize, sans-serif;
+}
+
+::ng-deep .mat-form-field {
+  letter-spacing: 0;
+}
+
+p {
+  font-family: Electrolize, sans-serif;
+}
+
+b {
+  color: #86c1b9;
+  margin-left: 5px;
+}
