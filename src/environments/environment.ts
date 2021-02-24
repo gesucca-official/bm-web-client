@@ -3,8 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  websocketServerEndpoint: 'http://localhost:8080/bm-ws-api/v1'
+  production: false
 };
 
 /*

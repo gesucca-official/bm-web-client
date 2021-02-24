@@ -23,6 +23,7 @@
     "@angular/router": "~11.2.1",
     "@ion-phaser/core": "^1.2.3",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.6",
     "net": "^1.0.2",
     "ngx-loading": "^8.0.0",
     "ngx-markdown": "^10.1.1",

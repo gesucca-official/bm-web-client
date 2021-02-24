@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import {environment} from '../../environments/environment';
 import {Move} from '../model/move';
 import {SessionService} from './session.service';
 import {Deck} from '../model/deck';
@@ -31,7 +30,7 @@ export class WebsocketService {
   }
 
   public connect(username: string, password: string, callback: () => void): void {
-    this.stompClient = Stomp.over(new SockJS(environment.websocketServerEndpoint));
+    this.stompClient = Stomp.over(new SockJS('/ws'));
     this.stompClient.connect({
       login: username,
       passcode: password

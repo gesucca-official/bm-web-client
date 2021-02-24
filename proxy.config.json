@@ -1,7 +1,18 @@
 {
-  "/api": {
+  "/rest": {
     "target": "http://localhost:8080",
-    "pathRewrite": {"^/api": "/bm-rest-api/v1"},
+    "pathRewrite": {
+      "^/rest": "/api/rest/v1"
+    },
+    "changeOrigin": true,
+    "secure": false
+  },
+  "/ws": {
+    "target": "ws://localhost:8080",
+    "pathRewrite": {
+      "^/ws": "/api/ws/v1"
+    },
+    "changeOrigin": true,
     "secure": false
   }
 }
