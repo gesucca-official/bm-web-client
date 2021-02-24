@@ -1,9 +1,9 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {CodeDialogData} from "../../../client-debug/code-dialog/code-dialog-data";
-import {CodeDialogComponent} from "../../../client-debug/code-dialog/code-dialog.component";
-import {SessionService} from "../../../service/session.service";
-import {Deck} from "../../../model/deck";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {CodeDialogData} from '../../../client-debug/code-dialog/code-dialog-data';
+import {CodeDialogComponent} from '../../../client-debug/code-dialog/code-dialog.component';
+import {SessionService} from '../../../service/session.service';
+import {Deck} from '../../../model/deck';
 
 @Component({
   selector: 'app-choose-deck-dialog',

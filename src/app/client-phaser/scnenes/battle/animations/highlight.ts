@@ -1,25 +1,27 @@
-import {PhaserSettingsService} from "../../../phaser-settings.service";
-import {UI_CardInHand} from "../model/ui-card-in-hand";
+import {PhaserSettingsService} from '../../../phaser-settings.service';
+import {UI_CardInHand} from '../model/ui-card-in-hand';
 
 export class HighlightAnimation {
 
-  private settings: PhaserSettingsService;
-
   private constructor() {
-    this.settings = window['settingsService'];
+    // @ts-ignore
+    this.settings = window.settingsService;
   }
 
   private static _INSTANCE: HighlightAnimation;
 
-  public static getInstance(): HighlightAnimation {
-    if (!this._INSTANCE)
-      this._INSTANCE = new HighlightAnimation();
-    return this._INSTANCE;
-  }
+  private settings: PhaserSettingsService;
 
   private readonly tweens: Map<string, Phaser.Tweens.Tween[]> = new Map<string, Phaser.Tweens.Tween[]>();
 
-  highlight(target: UI_CardInHand, scene: Phaser.Scene) {
+  public static getInstance(): HighlightAnimation {
+    if (!this._INSTANCE) {
+      this._INSTANCE = new HighlightAnimation();
+    }
+    return this._INSTANCE;
+  }
+
+  highlight(target: UI_CardInHand, scene: Phaser.Scene): void {
     target.getContainer().setDepth(target.getContainer().depth + 10);
     target.getTintTarget().setTint(0x44ff44);
 
@@ -42,7 +44,7 @@ export class HighlightAnimation {
     this.tweens.set(target.getId(), [raiseTween, zoomTween]);
   }
 
-  resetHighlight(target: UI_CardInHand, scene: Phaser.Scene) {
+  resetHighlight(target: UI_CardInHand, scene: Phaser.Scene): void {
     this.tweens.get(target.getId()).forEach(t => {
       t.stop();
       t.remove();

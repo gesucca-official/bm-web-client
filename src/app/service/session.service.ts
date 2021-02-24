@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {QueuedUser, User} from "../model/user";
-import {UserAccountData} from "../model/user-account-data";
+import {QueuedUser, User} from '../model/user';
+import {UserAccountData} from '../model/user-account-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
+  // tslint:disable:variable-name
   private _queued: boolean;
   private _queuedFor: string;
 
@@ -24,8 +25,8 @@ export class SessionService {
     }
   };
 
-  private _isWaitingForUserAccountData: boolean = false;
-  private _isLoadingGame: boolean = false;
+  private _isWaitingForUserAccountData = false;
+  private _isLoadingGame = false;
 
   get queued(): boolean {
     return this._queued;

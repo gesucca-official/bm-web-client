@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {SessionService} from "../../service/session.service";
+import {SessionService} from '../../service/session.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,8 +15,9 @@ export class ToolbarComponent {
     return this.sessionService.isWaitingForUserAccountData || this.sessionService.userAccountData.username == null;
   }
 
-  logOut() {
-    if (confirm('Are you sure you want to Log Out?'))
+  logOut(): void {
+    if (confirm('Are you sure you want to Log Out?')) {
       window.location.reload();
+    }
   }
 }

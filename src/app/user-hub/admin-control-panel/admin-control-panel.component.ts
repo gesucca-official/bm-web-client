@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-control-panel',
@@ -14,14 +14,16 @@ export class AdminControlPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get<number>('/control-panel/logs/games/qty').subscribe(res => this.loggedGamesQty = res);
+    this.http.get<number>('/rest/control-panel/logs/games/qty').subscribe(res => this.loggedGamesQty = res);
   }
 
-  drainLog() {
-    window.open('/control-panel/logs/games/drain', "_blank");
+  drainLog(): void {
+    if (confirm('This will delete logs from DB, are you sure?')) {
+      window.open('/control-panel/logs/games/drain', '_blank');
+    }
   }
 
-  showUnfinished() {
-    window.open('/control-panel/logs/games/open', "_blank");
+  showUnfinished(): void {
+    window.open('/control-panel/logs/games/open', '_blank');
   }
 }

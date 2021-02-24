@@ -1,26 +1,10 @@
-import {Opponent, Player} from "../../../../model/player";
-import {UI_Item} from "./ui-item";
-import {UI_AbstractObject} from "./ui-abstract-object";
-import {DetailsAnimation} from "../animations/details";
+import {Opponent, Player} from '../../../../model/player';
+import {UI_Item} from './ui-item';
+import {UI_AbstractObject} from './ui-abstract-object';
+import {DetailsAnimation} from '../animations/details';
 
+// tslint:disable-next-line:class-name
 export class UI_Player extends UI_AbstractObject {
-
-  private readonly items: Phaser.GameObjects.Container[] = [];
-
-  getItems(): Phaser.GameObjects.Container[] {
-    return this.items;
-  }
-
-  protected readonly model: Player | Opponent;
-  protected readonly character: Phaser.GameObjects.Image;
-
-  // damned inheritance, I have to put those here to be able to use in subclasses constructor super call
-  protected readonly index: number;
-  protected readonly qty: number;
-
-  private readonly name: Phaser.GameObjects.Text;
-  private readonly stats: Phaser.GameObjects.Container;
-  private readonly zone: Phaser.GameObjects.Zone;
 
   constructor(scene: Phaser.Scene, model: Player | Opponent, nameSize: number, textureNameSuffix?: string, index?: number, qty?: number) {
     super();
@@ -56,6 +40,23 @@ export class UI_Player extends UI_AbstractObject {
     this.container.on('pointerdown', () => DetailsAnimation.getInstance().focusDetails(this, scene));
     this.container.on('pointerdown', () => DetailsAnimation.getInstance().showSummary(this, scene));
     this.container.on('pointerdown', () => DetailsAnimation.getInstance().zoomObjForDetails(this, scene));
+  }
+
+  private readonly items: Phaser.GameObjects.Container[] = [];
+
+  protected readonly model: Player | Opponent;
+  protected readonly character: Phaser.GameObjects.Image;
+
+  // damned inheritance, I have to put those here to be able to use in subclasses constructor super call
+  protected readonly index: number;
+  protected readonly qty: number;
+
+  private readonly name: Phaser.GameObjects.Text;
+  private readonly stats: Phaser.GameObjects.Container;
+  private readonly zone: Phaser.GameObjects.Zone;
+
+  getItems(): Phaser.GameObjects.Container[] {
+    return this.items;
   }
 
   getId(): string {
@@ -116,7 +117,7 @@ export class UI_Player extends UI_AbstractObject {
     const healthText = scene.add.text(
       this.settingsService.scaleForMin(30),
       -healthSymbol.displayHeight / 2 + this.settingsService.scaleForMin(10),
-      '' + this.model.character.resources['HEALTH'])
+      '' + this.model.character.resources.HEALTH)
       .setFontSize(this.settingsService.scaleForMin(32))
       .setFontFamily('Electrolize')
       .setColor('#ffffff');
@@ -126,7 +127,7 @@ export class UI_Player extends UI_AbstractObject {
     const alertnessText = scene.add.text(
       this.settingsService.scaleForMin(30),
       -alertnessSymbol.displayHeight / 2 + alertnessSymbol.y,
-      '' + this.model.character.resources['ALERTNESS'])
+      '' + this.model.character.resources.ALERTNESS)
       .setFontSize(this.settingsService.scaleForMin(32))
       .setFontFamily('Electrolize')
       .setColor('#ffffff');

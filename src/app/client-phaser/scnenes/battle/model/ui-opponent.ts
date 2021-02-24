@@ -1,6 +1,7 @@
-import {Opponent, Player} from "../../../../model/player";
-import {UI_Player} from "./ui-player";
+import {Opponent, Player} from '../../../../model/player';
+import {UI_Player} from './ui-player';
 
+// tslint:disable-next-line:class-name
 export class UI_Opponent extends UI_Player {
 
 

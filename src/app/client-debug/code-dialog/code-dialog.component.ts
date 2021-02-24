@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {CodeDialogData} from "./code-dialog-data";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {CodeDialogData} from './code-dialog-data';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-code-dialog',
@@ -10,11 +10,10 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class CodeDialogComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<CodeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: CodeDialogData) {
   }
 
-  logRawJson() {
+  logRawJson(): void {
     console.log(this.dialogData.jsonTextData);
   }
 }

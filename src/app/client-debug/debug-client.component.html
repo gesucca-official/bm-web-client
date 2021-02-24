@@ -12,9 +12,9 @@
                     [cardData]="card"
                     [targets]="gameService.getTargets(card)"
                     [chosenTarget]="gameService.getTargets(card)[0]"
-                    [discardableCards]="discardableCards()"
-                    [cardToDiscard]="discardableCards()[0]"
+                    [discardableCards]="getDiscardableCards()"
+                    [cardToDiscard]="getDiscardableCards()[0]"
                     [character]="gameService.playerState.character"
-                    (onPlayThis)="playCard($event)"></app-card-in-hand>
+                    (cardPlayedEvent)="playCard($event)"></app-card-in-hand>
 </div>
 <ngx-loading [show]="sessionService.isLoadingGame" [config]="{fullScreenBackdrop: true}"></ngx-loading>

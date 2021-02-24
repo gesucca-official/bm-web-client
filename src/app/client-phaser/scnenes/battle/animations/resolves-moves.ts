@@ -1,5 +1,5 @@
-import {PhaserSettingsService} from "../../../phaser-settings.service";
-import {Move} from "../../../../model/move";
+import {PhaserSettingsService} from '../../../phaser-settings.service';
+import {Move} from '../../../../model/move';
 
 export class ResolvedMoveAnimation {
 

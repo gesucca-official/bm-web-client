@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Player} from "../../model/player";
-import {MatDialog} from "@angular/material/dialog";
-import {CodeDialogComponent} from "../code-dialog/code-dialog.component";
-import {Card} from "../../model/card";
+import {Player} from '../../model/player';
+import {MatDialog} from '@angular/material/dialog';
+import {CodeDialogComponent} from '../code-dialog/code-dialog.component';
+import {Card} from '../../model/card';
 
 @Component({
   selector: 'app-character-card',
@@ -20,26 +20,26 @@ export class CharacterCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logState() {
+  logState(): void {
     console.log(this.playerState);
   }
 
   get health(): number {
-    return this.playerState.character.resources['HEALTH'];
+    return this.playerState.character.resources.HEALTH;
   }
 
   get alertness(): number {
-    return this.playerState.character.resources['ALERTNESS'];
+    return this.playerState.character.resources.ALERTNESS;
   }
 
   get otherResources(): Map<string, number> {
     const res = JSON.parse(JSON.stringify(this.playerState.character.resources));
-    delete res['HEALTH']
-    delete res['ALERTNESS']
+    delete res.HEALTH;
+    delete res.ALERTNESS;
     return res;
   }
 
-  logItem(item: Card) {
+  logItem(item: Card): void {
     this.dialog.open(CodeDialogComponent, {
       width: 'fit-content',
       data: {
@@ -47,6 +47,6 @@ export class CharacterCardComponent implements OnInit {
         html: item.effect,
         jsonTextData: item
       }
-    })
+    });
   }
 }

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SponsorComponent} from "./sponsor/sponsor.component";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import {SponsorComponent} from './sponsor/sponsor.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +16,12 @@ export class HomeComponent implements OnInit {
     this.snackBar.openFromComponent(SponsorComponent, {duration: 2500, panelClass: 'sponsor'});
   }
 
-  youtubeLink() {
-    window.document.location.href = "https://www.youtube.com/channel/UCVn26_2xCJDngLicWKxQRmw"
+  youtubeLink(): void {
+    window.document.location.href = 'https://www.youtube.com/channel/UCVn26_2xCJDngLicWKxQRmw';
   }
 
-  instagramLink() {
-    window.document.location.href = "https://www.instagram.com/gesucca/"
+  instagramLink(): void {
+    window.document.location.href = 'https://www.instagram.com/gesucca/';
   }
 }
 

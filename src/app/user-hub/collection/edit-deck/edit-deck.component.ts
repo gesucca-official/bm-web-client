@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Deck} from "../../../model/deck";
-import {SessionService} from "../../../service/session.service";
-import {Collection} from "../../../model/user-account-data";
-import {Card} from "../../../model/card";
+import {Deck} from '../../../model/deck';
+import {SessionService} from '../../../service/session.service';
+import {Collection} from '../../../model/user-account-data';
+import {Card} from '../../../model/card';
 
 @Component({
   selector: 'app-edit-deck',
@@ -27,8 +27,9 @@ export class EditDeckComponent implements OnInit {
   filterBasicActionCards(): Card[] {
     const filtered = [];
     this.collection.cards.forEach(c => {
-      if (c.basicAction)
-        filtered.push(c)
+      if (c.basicAction) {
+        filtered.push(c);
+      }
     });
     return filtered;
   }
@@ -36,8 +37,9 @@ export class EditDeckComponent implements OnInit {
   filterLastResortCards(): Card[] {
     const filtered = [];
     this.collection.cards.forEach(c => {
-      if (c.lastResort)
-        filtered.push(c)
+      if (c.lastResort) {
+        filtered.push(c);
+      }
     });
     return filtered;
   }
@@ -45,53 +47,60 @@ export class EditDeckComponent implements OnInit {
   filterCharacterBoundCards(): Card[] {
     const filtered = [];
     this.collection.cards.forEach(c => {
-      if (c.characterBound && this.deck.character && c.boundToCharacter === this.deck.character.bindingName)
-        filtered.push(c)
+      if (c.characterBound && this.deck.character && c.boundToCharacter === this.deck.character.bindingName) {
+        filtered.push(c);
+      }
     });
     return filtered;
   }
 
-  searchCollectionCards() {
+  searchCollectionCards(): void {
     this.collectionCardsShown = [];
     this.collection.cards.forEach(c => {
-      if (JSON.stringify(c).toUpperCase().includes(this.collectionSearchTerm.toUpperCase()))
-        this.collectionCardsShown.push(c)
+      if (JSON.stringify(c).toUpperCase().includes(this.collectionSearchTerm.toUpperCase())) {
+        this.collectionCardsShown.push(c);
+      }
     });
   }
 
-  changeCardShownByToggle() {
+  changeCardShownByToggle(): void {
     this.collectionCardsShown = [];
-    if (this.showDeckToggle)
+    if (this.showDeckToggle) {
       this.collectionCardsShown = this.deck.regularCards;
-    else this.collection.cards.forEach(c => {
-      if (!c.characterBound && !c.lastResort && !c.basicAction)
-        this.collectionCardsShown.push(c);
-    })
+    } else {
+      this.collection.cards.forEach(c => {
+        if (!c.characterBound && !c.lastResort && !c.basicAction) {
+          this.collectionCardsShown.push(c);
+        }
+      });
+    }
   }
 
   ngOnInit(): void {
     this.changeCardShownByToggle();
   }
 
-  addOrRemoveFromDeck(card: Card) {
+  addOrRemoveFromDeck(card: Card): void {
     if (this.showDeckToggle) {
       // delete one from deck
-      const index = this.deck.regularCards.findIndex(obj => obj.name === card.name)
+      const index = this.deck.regularCards.findIndex(obj => obj.name === card.name);
       if (index > -1) {
         this.deck.regularCards.splice(index, 1);
       }
-    } else this.deck.regularCards.push(card);
+    } else {
+      this.deck.regularCards.push(card);
+    }
   }
 
-  saveDeckAction() {
+  saveDeckAction(): void {
     this.saveDeck.emit(this.deck);
   }
 
-  exitAction() {
+  exitAction(): void {
     this.exit.emit();
   }
 
-  isDeckValid() {
+  isDeckValid(): boolean {
     return this.deck.regularCards.length === 20
       && this.deck.characterBoundCards.length === 2
       && this.deck.deckId !== null
@@ -100,16 +109,18 @@ export class EditDeckComponent implements OnInit {
       && this.deck.lastResortCard !== null;
   }
 
-  addCharacterBoundCard(card: Card) {
+  addCharacterBoundCard(card: Card): void {
     this.deck.characterBoundCards.push(card);
-    if (this.deck.characterBoundCards.length > 2)
+    if (this.deck.characterBoundCards.length > 2) {
       this.deck.characterBoundCards.splice(0, 1);
+    }
   }
 
   getCharBoundCardsNames(): string {
-    if (this.deck.characterBoundCards.length == 0)
+    if (this.deck.characterBoundCards.length === 0) {
       return 'Not Chosen';
-    else
+    } else {
       return this.deck.characterBoundCards.map(c => c.name).join(', ');
+    }
   }
 }

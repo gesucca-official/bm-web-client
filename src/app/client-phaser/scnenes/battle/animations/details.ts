@@ -1,22 +1,17 @@
-import {UI_AbstractObject} from "../model/ui-abstract-object";
-import {PhaserSettingsService} from "../../../phaser-settings.service";
-import {UI_Item} from "../model/ui-item";
+import {UI_AbstractObject} from '../model/ui-abstract-object';
+import {PhaserSettingsService} from '../../../phaser-settings.service';
+import {UI_Item} from '../model/ui-item';
 
 export class DetailsAnimation {
 
-  private settings: PhaserSettingsService;
-
   private constructor() {
-    this.settings = window['settingsService'];
+    // @ts-ignore
+    this.settings = window.settingsService;
   }
 
   private static _INSTANCE: DetailsAnimation;
 
-  public static getInstance(): DetailsAnimation {
-    if (!this._INSTANCE)
-      this._INSTANCE = new DetailsAnimation();
-    return this._INSTANCE;
-  }
+  private settings: PhaserSettingsService;
 
   // toggle behaviour of details methods, allowing them to listen for events (es. click to do/re click to cancel)
   private readonly detailsShownFor: Map<string, boolean> = new Map<string, boolean>();
@@ -31,16 +26,24 @@ export class DetailsAnimation {
   // tween added to animation targets
   private tween: Map<string, Phaser.Tweens.Tween> = new Map<string, Phaser.Tweens.Tween>();
 
-  public toggleDetails(objId: string) {
-    if (!this.detailsShownFor.get(objId))
-      this.detailsShownFor.set(objId, true);
-    else
-      this.detailsShownFor.set(objId, !this.detailsShownFor.get(objId));
-    console.debug('Toggled details view for Obj ' + objId + ': toggle is now ' + this.detailsShownFor.get(objId));
-    console.debug(this.detailsShownFor);
+  public static getInstance(): DetailsAnimation {
+    if (!this._INSTANCE) {
+      this._INSTANCE = new DetailsAnimation();
+    }
+    return this._INSTANCE;
   }
 
-  public focusDetails(obj: UI_AbstractObject, scene: Phaser.Scene) {
+  public toggleDetails(objId: string): void {
+    if (!this.detailsShownFor.get(objId)) {
+      this.detailsShownFor.set(objId, true);
+    } else {
+      this.detailsShownFor.set(objId, !this.detailsShownFor.get(objId));
+    }
+    // console.debug('Toggled details view for Obj ' + objId + ': toggle is now ' + this.detailsShownFor.get(objId));
+    // console.debug(this.detailsShownFor);
+  }
+
+  public focusDetails(obj: UI_AbstractObject, scene: Phaser.Scene): void {
     if (this.detailsShownFor.get(obj.getId())) {
       const bg = scene.add.rectangle(0, 0,
         this.settings.getScreenWidth(),
@@ -49,14 +52,14 @@ export class DetailsAnimation {
         .setDepth(1)
         .setInteractive(); // this prevents things underneath it to be clicked
       this.blurredBackground.set(obj.getId(), bg);
-      console.debug('Focused Obj ' + obj.getId() + ' with blurred background')
+      // console.debug('Focused Obj ' + obj.getId() + ' with blurred background');
     } else {
       this.blurredBackground.get(obj.getId()).destroy();
-      console.debug('Destroyed blurred Background created for Obj ' + obj.getId())
+      // console.debug('Destroyed blurred Background created for Obj ' + obj.getId());
     }
   }
 
-  public showSummary(obj: UI_AbstractObject, scene: Phaser.Scene) {
+  public showSummary(obj: UI_AbstractObject, scene: Phaser.Scene): void {
     if (this.detailsShownFor.get(obj.getId())) {
       const summary = scene.add.text(this.settings.getScreenWidth() / 2, this.settings.getScreenHeight() / 3,
         JSON.stringify(obj.getModel(), null, 2))
@@ -64,16 +67,16 @@ export class DetailsAnimation {
         .setFontFamily('Electrolize')
         .setColor('#000000').setDepth(100);
       this.summary.set(obj.getId(), summary);
-      console.debug('Summary shown for Obj ' + obj.getId())
+      // console.debug('Summary shown for Obj ' + obj.getId());
     } else {
       this.summary.get(obj.getId()).destroy();
-      console.debug('Destroyed Summary of Obj ' + obj.getId())
+      // console.debug('Destroyed Summary of Obj ' + obj.getId());
     }
   }
 
-  public zoomObjForDetails(obj: UI_AbstractObject, scene: Phaser.Scene) {
+  public zoomObjForDetails(obj: UI_AbstractObject, scene: Phaser.Scene): void {
     if (this.detailsShownFor.get(obj.getId())) {
-      console.debug('Placing zoomed Obj ' + obj.getId());
+      // console.debug('Placing zoomed Obj ' + obj.getId());
       obj.getAnimationTargets().forEach(target => {
         target.setDepth(target.depth + 5);
         this.originPosOf.set(target.name, [target.x, target.y]);
@@ -89,11 +92,13 @@ export class DetailsAnimation {
           scale: 1.5
         });
         this.tween.set(obj.getId() + '.' + target.name, tween);
+        /*
         console.debug('Animation Target: ' + target.name);
         console.debug('Animation Target X: ' + target.x);
         console.debug('Whole Obj X: ' + obj.getX());
         console.debug('Animation Target Y: ' + target.y);
         console.debug('Whole Obj Y: ' + obj.getY());
+        */
       });
       obj.getInteractiveAfterAnimation().forEach(i => i.setInteractive());
     } else {
@@ -118,7 +123,7 @@ export class DetailsAnimation {
 
   // I have long thought about the existence of this, but I never bothered to generalize it with the above
   // TODO a factorization is sure needed, dunno about the deeper stuff
-  public zoomItemForDetails(item: UI_Item, scene: Phaser.Scene,): void {
+  public zoomItemForDetails(item: UI_Item, scene: Phaser.Scene, ): void {
     if (this.detailsShownFor.get(item.getId())) {
       this.summary.get(item.getOwner().getId()).setVisible(false);
       this.blurredBackground.get(item.getOwner().getId()).setVisible(false);

@@ -1,8 +1,9 @@
-import {Card} from "../../../../model/card";
-import {HighlightAnimation} from "../animations/highlight";
-import {UI_AbstractObject} from "./ui-abstract-object";
-import {DetailsAnimation} from "../animations/details";
+import {Card} from '../../../../model/card';
+import {HighlightAnimation} from '../animations/highlight';
+import {UI_AbstractObject} from './ui-abstract-object';
+import {DetailsAnimation} from '../animations/details';
 
+// tslint:disable-next-line:class-name
 export class UI_CardInHand extends UI_AbstractObject {
 
   private readonly model: Card;
@@ -26,10 +27,10 @@ export class UI_CardInHand extends UI_AbstractObject {
 
     this.container.setSize(this.template.displayWidth, this.template.displayHeight);
     this.container.setDepth(index + 3);
-    this.container.setData({card: model.name})
+    this.container.setData({card: model.name});
     this.container.setInteractive();
 
-    scene.input.setDraggable(this.container)
+    scene.input.setDraggable(this.container);
     if (!this.gameService.isPlayable(model, this.gameService.playerState.character)) {
       this.template.setTint(0xd3d3d3);
     }
@@ -37,8 +38,9 @@ export class UI_CardInHand extends UI_AbstractObject {
     this.setCardEvents(scene);
 
     scene.input.on('drag', () => {
-      if (this.detailsButtonShown)
+      if (this.detailsButtonShown) {
         this.toggleDetailsButton();
+      }
     });
   }
 
@@ -77,33 +79,33 @@ export class UI_CardInHand extends UI_AbstractObject {
   }
 
   getY(): number {
-    return (this.settingsService.getScreenHeight() * 0.75) + (this.template.displayHeight / 2)
+    return (this.settingsService.getScreenHeight() * 0.75) + (this.template.displayHeight / 2);
   }
 
   getTintTarget(): Phaser.GameObjects.Image {
     return this.template;
   }
 
-  toggleDetailsButton() {
+  toggleDetailsButton(): void {
     this.detailsButtonShown = !this.detailsButtonShown;
     if (!this.detailsButtonShown) {
       this.detailsButton.setVisible(false);
     }
   }
 
-  private renderName(scene: Phaser.Scene, template: Phaser.GameObjects.Image, model: Card) {
+  private renderName(scene: Phaser.Scene, template: Phaser.GameObjects.Image, model: Card): Phaser.GameObjects.Text {
     return scene.add.text(this.getTextX(template.displayWidth), this.getTextY(template.displayHeight), [model.name])
       .setFontSize(this.settingsService.scaleForMin(36))
       .setFontFamily('Electrolize')
       .setColor('#000000');
   }
 
-  private renderTemplate(scene: Phaser.Scene) {
+  private renderTemplate(scene: Phaser.Scene): Phaser.GameObjects.Image {
     return scene.add.image(0, 0, 'card')
       .setDisplaySize(this.getWidth(), this.getHeight());
   }
 
-  private displayDetailsButton(scene: Phaser.Scene) {
+  private displayDetailsButton(scene: Phaser.Scene): Phaser.GameObjects.Container {
     if (this.detailsButton) {
       this.detailsButton.setVisible(true);
       return;
@@ -124,36 +126,36 @@ export class UI_CardInHand extends UI_AbstractObject {
 
     // y can't I set this events on the container?? it doesn't work somehow
     button.on('pointerup', () => {
-      HighlightAnimation.getInstance().resetHighlight(this, scene)
-      DetailsAnimation.getInstance().toggleDetails(this.getId())
-      DetailsAnimation.getInstance().focusDetails(this, scene)
-      DetailsAnimation.getInstance().showSummary(this, scene)
-      DetailsAnimation.getInstance().zoomObjForDetails(this, scene)
+      HighlightAnimation.getInstance().resetHighlight(this, scene);
+      DetailsAnimation.getInstance().toggleDetails(this.getId());
+      DetailsAnimation.getInstance().focusDetails(this, scene);
+      DetailsAnimation.getInstance().showSummary(this, scene);
+      DetailsAnimation.getInstance().zoomObjForDetails(this, scene);
 
-      this.toggleDetailsButton()
+      this.toggleDetailsButton();
 
-      this.container.removeAllListeners()
-      this.container.setDepth(this.container.depth + 10) // counter depth reduction caused by reset highlight function
+      this.container.removeAllListeners();
+      this.container.setDepth(this.container.depth + 10); // counter depth reduction caused by reset highlight function
       this.container.once('pointerup', () => {
-        HighlightAnimation.getInstance().highlight(this, scene)
-        DetailsAnimation.getInstance().toggleDetails(this.getId())
-        DetailsAnimation.getInstance().focusDetails(this, scene)
-        DetailsAnimation.getInstance().showSummary(this, scene)
-        DetailsAnimation.getInstance().zoomObjForDetails(this, scene)
+        HighlightAnimation.getInstance().highlight(this, scene);
+        DetailsAnimation.getInstance().toggleDetails(this.getId());
+        DetailsAnimation.getInstance().focusDetails(this, scene);
+        DetailsAnimation.getInstance().showSummary(this, scene);
+        DetailsAnimation.getInstance().zoomObjForDetails(this, scene);
         this.setCardEvents(scene);
-      })
+      });
     });
   }
 
   private getTextX(templateWidth: number): number {
-    return -(templateWidth / 2) + this.settingsService.scaleForMin(40)
+    return -(templateWidth / 2) + this.settingsService.scaleForMin(40);
   }
 
   private getTextY(templateHeight: number): number {
-    return -(templateHeight / 2) + this.settingsService.scaleForMin(35)
+    return -(templateHeight / 2) + this.settingsService.scaleForMin(35);
   }
 
-  private renderImage(scene: Phaser.Scene, template: Phaser.GameObjects.Image, model: Card) {
+  private renderImage(scene: Phaser.Scene, template: Phaser.GameObjects.Image, model: Card): Phaser.GameObjects.Image {
     const card = model.image ? model.name : 'no-img';
     return scene.add.image(
       this.getTextX(template.displayWidth),
@@ -162,7 +164,7 @@ export class UI_CardInHand extends UI_AbstractObject {
       .setDisplaySize(this.settingsService.scaleForMin(420), this.settingsService.scaleForMin(300));
   }
 
-  private setCardEvents(scene: Phaser.Scene) {
+  private setCardEvents(scene: Phaser.Scene): void {
     this.container.on('pointerover', () => HighlightAnimation.getInstance().highlight(this, scene));
     this.container.on('pointerout', () => HighlightAnimation.getInstance().resetHighlight(this, scene));
     this.container.on('pointerdown', () => this.displayDetailsButton(scene));

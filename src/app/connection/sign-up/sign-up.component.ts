@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {ErrorStateMatcher} from "@angular/material/core";
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from "@angular/forms";
-import {HttpClient} from "@angular/common/http";
+import {ErrorStateMatcher} from '@angular/material/core';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -55,14 +55,15 @@ export class SignUpComponent {
     }, {validator: this.checkPasswords});
   }
 
+  // tslint:disable-next-line:typedef
   async sendVerificationEmail() {
     this.sendCodeClicked = true;
     this.isLoading = true;
-    setTimeout(() => this.sendCodeClicked = false, 15000)
+    setTimeout(() => this.sendCodeClicked = false, 15000);
 
     const usernameAvailable = await this.checkUsernameAvailability(this.playerIdFormControl.value);
     if (!usernameAvailable) {
-      this.isLoading = false
+      this.isLoading = false;
       Swal.fire(
         'Error!',
         'This username is already taken. Please choose another.',
@@ -91,9 +92,9 @@ export class SignUpComponent {
     ).then();
   }
 
-  signUp() {
+  signUp(): void {
     this.isLoading = true;
-    this.http.post<void>('/sign-up/register', {
+    this.http.post<void>('/rest/sign-up/register', {
       username: this.playerIdFormControl.value,
       password: this.passwordForm.value.password,
       email: this.emailFormControl.value,
@@ -112,13 +113,13 @@ export class SignUpComponent {
         'error'
       ).then();
       console.log(error);
-    }))
+    }));
   }
 
-  checkPasswords(group: FormGroup) {
-    let pass = group.controls.password.value;
-    let confirmPass = group.controls.confirmPassword.value;
-    return pass === confirmPass ? null : {notSame: true}
+  checkPasswords(group: FormGroup): any {
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.confirmPassword.value;
+    return pass === confirmPass ? null : {notSame: true};
   }
 
   private async checkUsernameAvailability(username: string): Promise<boolean> {
@@ -130,9 +131,9 @@ export class SignUpComponent {
   }
 
   private async sendVerificationCode(username: string, email: string): Promise<void> {
-    return this.http.post<void>('/sign-up/verify', {
-      username: username,
-      email: email
-    }).toPromise()
+    return this.http.post<void>('/rest/sign-up/verify', {
+      username,
+      email
+    }).toPromise();
   }
 }

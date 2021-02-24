@@ -1,4 +1,4 @@
 export interface Timer {
-  name: string,
-  timer: number
+  name: string;
+  timer: number;
 }

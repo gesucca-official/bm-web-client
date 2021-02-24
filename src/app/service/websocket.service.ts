@@ -1,24 +1,33 @@
 import {Injectable} from '@angular/core';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import {environment} from "../../environments/environment";
-import {Move} from "../model/move";
-import {SessionService} from "./session.service";
-import {Deck} from "../model/deck";
+import {environment} from '../../environments/environment';
+import {Move} from '../model/move';
+import {SessionService} from './session.service';
+import {Deck} from '../model/deck';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebsocketService {
+
+  constructor(protected sessionService: SessionService) {
+    this.subscriptions = new Map<string, any>();
+    this.connected = false;
+  }
+
   private stompClient: any; // dunno which type this is
 
   private connected: boolean;
 
   private subscriptions: Map<string, any[]>;
 
-  constructor(protected sessionService: SessionService) {
-    this.subscriptions = new Map<string, any>();
-    this.connected = false;
+  private static inferJoinGameEndpoint(gameType: string): string {
+    if (gameType.includes('Com')) {
+      return '/user/queue/game/' + gameType + '/ready';
+    } else {
+      return '/topic/game/' + gameType + '/ready';
+    }
   }
 
   public connect(username: string, password: string, callback: () => void): void {
@@ -48,12 +57,12 @@ export class WebsocketService {
   }
 
   // these deck methods maybe have to go somewhere else
-  public saveDeck(username: string, deck: Deck) {
+  public saveDeck(username: string, deck: Deck): void {
     this.sessionService.isWaitingForUserAccountData = true;
     this.stompClient.send('/app/user/' + username + '/deck', {}, JSON.stringify(deck));
   }
 
-  public deleteDeck(username: string, deck: Deck) {
+  public deleteDeck(username: string, deck: Deck): void {
     this.sessionService.isWaitingForUserAccountData = true;
     this.stompClient.send('/app/user/' + username + '/deck/delete', {}, JSON.stringify(deck));
   }
@@ -63,7 +72,10 @@ export class WebsocketService {
     this.sessionService.queuedFor = gameType.split('/')[1]; // TODO come on this is nowhere near being safe
     if (gameType.includes('ffa'))
       // TODO this never gets unsubscribed from
-      this.stompClient.subscribe('/topic/game/' + gameType + '/joined', (sdkEvent) => this.sessionService.usersInCurrentQueue = JSON.parse(sdkEvent.body))
+    {
+      this.stompClient.subscribe('/topic/game/' + gameType + '/joined',
+        (sdkEvent) => this.sessionService.usersInCurrentQueue = JSON.parse(sdkEvent.body));
+    }
 
     // no need to save this sub cause it will unsubscribe on completion
     const subscription = this.stompClient.subscribe(WebsocketService.inferJoinGameEndpoint(gameType), (sdkEvent) => {
@@ -98,7 +110,7 @@ export class WebsocketService {
     // when there's an update about the game get your updated view view
     gameSubs.push(
       this.stompClient.subscribe('/topic/game/' + gameId + '/update', () => {
-          this.requestGameView(gameId, playerId)
+          this.requestGameView(gameId, playerId);
         }
       ));
     // alert about other players moves
@@ -114,28 +126,22 @@ export class WebsocketService {
       this.stompClient.subscribe('/user/queue/game/' + gameId + '/' + playerId + '/view', gameViewCallback)
     );
 
-    //save everything to unsubscribe later
+    // save everything to unsubscribe later
     this.subscriptions.set(gameId, gameSubs);
   }
 
-  public requestGameView(gameId: string, playerId: string) {
+  public requestGameView(gameId: string, playerId: string): void {
     this.stompClient.send('/app/game/' + gameId + '/' + playerId + '/view', {});
   }
 
   // don't know if coupling Move class with this service is good
-  public submitMove(move: Move) {
+  public submitMove(move: Move): void {
     this.stompClient.send('/app/game/' + move.gameId + '/move', {}, JSON.stringify(move));
   }
 
-  public unsubToGame(gameId: string, playerId: string) {
+  public unsubToGame(gameId: string, playerId: string): void {
     this.stompClient.send('/app/game/' + gameId + '/' + playerId + '/leave', {});
     this.subscriptions.get(gameId).forEach(sub => sub.unsubscribe());
     this.subscriptions.delete(gameId);
-  }
-
-  private static inferJoinGameEndpoint(gameType: string): string {
-    if (gameType.includes('Com'))
-      return '/user/queue/game/' + gameType + '/ready';
-    else return '/topic/game/' + gameType + '/ready';
   }
 }

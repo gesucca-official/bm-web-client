@@ -1,20 +1,23 @@
-import {PhaserSettingsService} from "../../../phaser-settings.service";
-import {GameService} from "../../../../service/game.service";
+import {PhaserSettingsService} from '../../../phaser-settings.service';
+import {GameService} from '../../../../service/game.service';
 
+// tslint:disable-next-line:class-name
 export abstract class UI_AbstractObject {
 
-  protected container: Phaser.GameObjects.Container;
-
-  getContainer(): Phaser.GameObjects.Container {
-    return this.container;
+  protected constructor() {
+    // @ts-ignore
+    this.settingsService = window.settingsService;
+    // @ts-ignore
+    this.gameService = window.gameService;
   }
+
+  protected container: Phaser.GameObjects.Container;
 
   protected settingsService: PhaserSettingsService;
   protected gameService: GameService;
 
-  protected constructor() {
-    this.settingsService = window['settingsService'];
-    this.gameService = window['gameService'];
+  getContainer(): Phaser.GameObjects.Container {
+    return this.container;
   }
 
   abstract getId(): string;

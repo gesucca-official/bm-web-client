@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {GameState} from "../model/game-state";
-import {Opponent, Player} from "../model/player";
-import {Card} from "../model/card";
-import {Character} from "../model/character";
-import {WebsocketService} from "./websocket.service";
-import {Move} from "../model/move";
-import {Deck} from "../model/deck";
+import {GameState} from '../model/game-state';
+import {Opponent, Player} from '../model/player';
+import {Card} from '../model/card';
+import {Character} from '../model/character';
+import {WebsocketService} from './websocket.service';
+import {Move} from '../model/move';
+import {Deck} from '../model/deck';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class GameService {
   constructor(private websocketService: WebsocketService) {
   }
 
-  private _graphicClient: boolean = true;
+  // tslint:disable:variable-name
+  private _graphicClient = true;
 
   private _gameId: string;
   private _playerId: string;
@@ -44,15 +45,17 @@ export class GameService {
     const players = JSON.parse(JSON.stringify(this.gameState.players));
     const opp = [];
     Object.keys(players).forEach(k => {
-      if (k != this.playerId)
-        opp.push(players[k])
+      if (k !== this.playerId) {
+        opp.push(players[k]);
+      }
     });
     return opp.filter(o => !o.character.dead);
   }
 
   get cardsInHand(): Card[] {
-    if (this.gameState)
+    if (this.gameState) {
       return this.gameState.players[this.playerId].cardsInHand;
+    }
   }
 
   get playerId(): string {
@@ -88,42 +91,50 @@ export class GameService {
   }
 
   getCardObjFromName(name: string): Card {
-    for (let c of this.cardsInHand)
-      if (c.name === name)
+    for (const c of this.cardsInHand) {
+      if (c.name === name) {
         return c;
+      }
+    }
     return null;
   }
 
   // bouncing this to not "inject" another service in phaser game scene
-  submitMove(move: Move) {
+  submitMove(move: Move): void {
     this.websocketService.submitMove(move);
   }
 
   isPlayable(card: Card, character: Character): boolean {
-    if (this.getTargets(card).length <= 0)
+    if (this.getTargets(card).length <= 0) {
       return false;
-    for (let key in card.cost) {
-      if (!character.resources[key] || character.resources[key] < card.cost[key])
+    }
+    for (const key in card.cost) {
+      if (!character.resources[key] || character.resources[key] < card.cost[key]) {
         return false;
+      }
     }
     return true;
   }
 
   getTargets(card: Card): string[] {
     const targets = [];
-    if (card.canTarget.includes('SELF'))
-      targets.push('SELF')
-    if (card.canTarget.includes('OPPONENT'))
+    if (card.canTarget.includes('SELF')) {
+      targets.push('SELF');
+    }
+    if (card.canTarget.includes('OPPONENT')) {
       this.opponents.map(o => o.playerId)
-        .forEach(o => targets.push(o))
-    if (JSON.stringify(card.canTarget).includes('NEAR_ITEM'))
+        .forEach(o => targets.push(o));
+    }
+    if (JSON.stringify(card.canTarget).includes('NEAR_ITEM')) {
       this.playerState.character.items.map(i => 'SELF.' + i.name)
-        .forEach(o => targets.push(o))
-    if (JSON.stringify(card.canTarget).includes('FAR_ITEM'))
+        .forEach(o => targets.push(o));
+    }
+    if (JSON.stringify(card.canTarget).includes('FAR_ITEM')) {
       this.opponents.forEach(
         o => o.character.items.map(i => o.playerId + '.' + i.name)
-          .forEach(o => targets.push(o))
-      )
+          .forEach(oppItems => targets.push(oppItems))
+      );
+    }
     return targets;
   }
 

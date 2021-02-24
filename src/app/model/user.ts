@@ -1,9 +1,9 @@
 export interface User {
-  userLogin: string,
-  activity: string
+  userLogin: string;
+  activity: string;
 }
 
 export interface QueuedUser {
-  playerId: string,
-  human: boolean
+  playerId: string;
+  human: boolean;
 }

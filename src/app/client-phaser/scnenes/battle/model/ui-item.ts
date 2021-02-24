@@ -1,8 +1,9 @@
-import {Card} from "../../../../model/card";
-import {UI_AbstractObject} from "./ui-abstract-object";
-import {DetailsAnimation} from "../animations/details";
-import {UI_Player} from "./ui-player";
+import {Card} from '../../../../model/card';
+import {UI_AbstractObject} from './ui-abstract-object';
+import {DetailsAnimation} from '../animations/details';
+import {UI_Player} from './ui-player';
 
+// tslint:disable-next-line:class-name
 export class UI_Item extends UI_AbstractObject {
 
   private readonly player: UI_Player;

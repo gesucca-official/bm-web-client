@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import {WebsocketService} from "../service/websocket.service";
-import {GameService} from "../service/game.service";
-import {DebugClientComponent} from "../client-debug/debug-client.component";
-import {SessionService} from "../service/session.service";
-import {Deck} from "../model/deck";
-import {Router} from "@angular/router";
+import {WebsocketService} from '../service/websocket.service';
+import {GameService} from '../service/game.service';
+import {DebugClientComponent} from '../client-debug/debug-client.component';
+import {SessionService} from '../service/session.service';
+import {Deck} from '../model/deck';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-hub',
@@ -21,11 +21,11 @@ export class UserHubComponent {
               private router: Router) {
   }
 
-  bounceJoinGameEvent($event: { game: string, deck?: Deck }) {
+  bounceJoinGameEvent($event: { game: string, deck?: Deck }): void {
     if (this.gameService.graphicClient) {
       this.gameService.gameType = $event;
       this.sessionService.isLoadingGame = true;
-      this.router.navigateByUrl('/phaser')
+      this.router.navigateByUrl('/phaser');
     } else {
       this.sessionService.isLoadingGame = true;
       this.debugClient.joinGame($event);

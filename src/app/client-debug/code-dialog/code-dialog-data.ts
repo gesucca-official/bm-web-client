@@ -1,5 +1,5 @@
 export interface CodeDialogData {
-  title: string,
-  html: string,
-  jsonTextData: string
+  title: string;
+  html: string;
+  jsonTextData: string;
 }

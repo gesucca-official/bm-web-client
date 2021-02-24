@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
-import {GameService} from "../../service/game.service";
-import {WebsocketService} from "../../service/websocket.service";
-import {HttpClient} from "@angular/common/http";
-import Swal from "sweetalert2";
+import {GameService} from '../../service/game.service';
+import {WebsocketService} from '../../service/websocket.service';
+import {HttpClient} from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-server-connection',
@@ -21,11 +21,12 @@ export class SignInComponent {
               private http: HttpClient) {
   }
 
+  // tslint:disable-next-line:typedef
   async logIn() {
     this.isLoading = true;
     const areCredentialsValid = await this.checkCredentials(this.playerId, this.password);
     if (!areCredentialsValid) {
-      this.isLoading = false
+      this.isLoading = false;
       Swal.fire(
         'Log In Failed',
         'Please check your credentials and ensure you are not already logged from somewhere else.',
@@ -42,9 +43,9 @@ export class SignInComponent {
   }
 
   private async checkCredentials(username: string, password: string): Promise<boolean> {
-    return this.http.post<boolean>('/sign-in/validate', {
-      username: username,
-      password: password
-    }).toPromise()
+    return this.http.post<boolean>('/rest/sign-in/validate', {
+      username,
+      password
+    }).toPromise();
   }
 }

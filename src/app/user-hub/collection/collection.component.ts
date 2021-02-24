@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {SessionService} from "../../service/session.service";
-import {Deck} from "../../model/deck";
-import {WebsocketService} from "../../service/websocket.service";
+import {SessionService} from '../../service/session.service';
+import {Deck} from '../../model/deck';
+import {WebsocketService} from '../../service/websocket.service';
 
 @Component({
   selector: 'app-collection',
@@ -16,7 +16,7 @@ export class CollectionComponent {
   constructor(public sessionService: SessionService, public websocketService: WebsocketService) {
   }
 
-  newDeck() {
+  newDeck(): void {
     this.editing = true;
     this.targetDeck = {
       deckId: null,
@@ -28,16 +28,16 @@ export class CollectionComponent {
     };
   }
 
-  editDeck(deck: Deck) {
+  editDeck(deck: Deck): void {
     this.editing = true;
     this.targetDeck = deck;
   }
 
-  saveDeck(deck: Deck) {
+  saveDeck(deck: Deck): void {
     this.websocketService.saveDeck(this.sessionService.userAccountData.username, deck);
   }
 
-  deleteDeck(deck: Deck) {
+  deleteDeck(deck: Deck): void {
     this.websocketService.deleteDeck(this.sessionService.userAccountData.username, deck);
   }
 }
