@@ -5,19 +5,20 @@ const app = express();
 app.use(express.static('./dist/bm-web-client'));
 
 app.use(createProxyMiddleware('/rest', {
-  target: 'http://localhost:8080', //TODO set definitive url here
+  target: 'https://botte-micidiali-server.herokuapp.com',
   pathRewrite: {
     "^/rest": "/api/rest/v1"
   },
-  changeOrigin: true
+  changeOrigin: true,
+  secure: true
 }));
 app.use(createProxyMiddleware('/ws', {
-  target: 'ws://localhost:8080',
+  target: 'ws://botte-micidiali-server.herokuapp.com',
   pathRewrite: {
     "^/ws": "/api/ws/v1"
   },
   changeOrigin: true,
-  ws: true
+  secure: true,
 }));
 
 app.listen(process.env.PORT || 4200)
