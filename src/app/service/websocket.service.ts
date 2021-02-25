@@ -71,6 +71,7 @@ export class WebsocketService {
     if (gameType.includes('ffa'))
       // TODO this never gets unsubscribed from
     {
+      this.sessionService.isLoadingGame = false; // people should be able to see what's going on while waiting for now
       this.stompClient.subscribe('/topic/game/' + gameType + '/joined',
         (sdkEvent) => this.sessionService.usersInCurrentQueue = JSON.parse(sdkEvent.body));
     }
