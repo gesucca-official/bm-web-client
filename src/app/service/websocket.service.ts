@@ -21,9 +21,9 @@ export class WebsocketService {
 
   private subscriptions: Map<string, any[]>;
 
-  private static inferJoinGameEndpoint(gameType: string): string {
+  private static inferJoinGameEndpoint(gameType: string, playerId: string): string {
     if (gameType.includes('Com')) {
-      return '/user/queue/game/' + gameType + '/ready';
+      return '/user/' + playerId + '/game/' + gameType + '/ready';
     } else {
       return '/topic/game/' + gameType + '/ready';
     }
@@ -41,9 +41,8 @@ export class WebsocketService {
         (sdkEvent) => this.sessionService.usersConnected = JSON.parse(sdkEvent.body));
       this.stompClient.send('/app/connections/users/tell/me', {});
 
-      this.stompClient.subscribe('/user/queue/user/' + username + '/account',
+      this.stompClient.subscribe('/user/' + username + '/account/data',
         (sdkEvent) => this.sessionService.userAccountData = JSON.parse(sdkEvent.body));
-
       this.stompClient.send('/app/user/' + username + '/account', {});
       this.sessionService.isWaitingForUserAccountData = true;
 
@@ -77,7 +76,7 @@ export class WebsocketService {
     }
 
     // no need to save this sub cause it will unsubscribe on completion
-    const subscription = this.stompClient.subscribe(WebsocketService.inferJoinGameEndpoint(gameType), (sdkEvent) => {
+    const subscription = this.stompClient.subscribe(WebsocketService.inferJoinGameEndpoint(gameType, playerId), (sdkEvent) => {
       subscription.unsubscribe();
       this.sessionService.queued = false;
       this.sessionService.queuedFor = null;
@@ -118,11 +117,11 @@ export class WebsocketService {
     );
     // alert player when he select an illegal move
     gameSubs.push(
-      this.stompClient.subscribe('/user/queue/player/action/illegalMove', illegalMoveCallback)
+      this.stompClient.subscribe('/user/' + playerId + '/illegalMove', illegalMoveCallback)
     );
     // update game when receiving a new view
     gameSubs.push(
-      this.stompClient.subscribe('/user/queue/game/' + gameId + '/' + playerId + '/view', gameViewCallback)
+      this.stompClient.subscribe('/user/' + playerId + '/game/' + gameId + '/view', gameViewCallback)
     );
 
     // save everything to unsubscribe later
