@@ -5,12 +5,15 @@ import {UI_Opponent} from './model/ui-opponent';
 import {ResolvedMoveAnimation} from './animations/resolves-moves';
 import {UI_Player} from './model/ui-player';
 import {DiscardChoiceAnimation} from './animations/discard-choice';
+import {AppComponent} from '../../../app.component';
+import {NGXLogger} from 'ngx-logger';
 
 export class BattleScene extends Phaser.Scene {
 
   public static KEY = 'battleScene';
   private readonly gameService: GameService;
   private readonly settingsService: PhaserSettingsService;
+  private readonly logger: NGXLogger;
 
   player: Phaser.GameObjects.Container;
   opponents: Map<string, Phaser.GameObjects.Container> = new Map<string, Phaser.GameObjects.Container>();
@@ -18,12 +21,12 @@ export class BattleScene extends Phaser.Scene {
 
   constructor() {
     super({key: BattleScene.KEY});
-    // this below is the most hazardous hack
-    // dunno how else I should inject angular services into phaser classes
     // @ts-ignore
     this.gameService = window.gameService;
     // @ts-ignore
     this.settingsService = window.settingsService;
+    // @ts-ignore
+    this.logger = window.logger;
   }
 
   preload(): void {
@@ -68,9 +71,9 @@ export class BattleScene extends Phaser.Scene {
       // TODO turn off details button while dragging
     });
     this.input.on('drop', (pointer, gameObject, dropZone) => {
-      // console.debug('Drop Event occurred! Logging gameObject and dropZone');
-      // console.debug(gameObject.data.list);
-      // console.debug(dropZone.data.list);
+      this.logger.debug('Drop Event occurred! Logging gameObject and dropZone', AppComponent.SESSION_ID);
+      this.logger.debug(gameObject.data.list, AppComponent.SESSION_ID);
+      this.logger.debug(dropZone.data.list, AppComponent.SESSION_ID);
       this.handleDropEvent(gameObject.data.list.card, dropZone.data.list.target);
     });
 

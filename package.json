@@ -26,6 +26,7 @@
     "http-proxy-middleware": "^1.0.6",
     "net": "^1.0.2",
     "ngx-loading": "^8.0.0",
+    "ngx-logger": "^4.2.1",
     "ngx-markdown": "^10.1.1",
     "phaser": "^3.24.1",
     "rxjs": "~6.6.0",

@@ -44,6 +44,7 @@ import {CollectionCardComponent} from './user-hub/collection/collection-card/col
 import {CollectionCharacterCardComponent} from './user-hub/collection/character-card/collection-character-card.component';
 import {ChooseDeckDialogComponent} from './connection/choose-game/choose-deck-dialog/choose-deck-dialog.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
       {path: 'phaser', component: PhaserClientComponent},
       {path: '**', redirectTo: '', component: HomeComponent}
     ], {onSameUrlNavigation: 'reload'}),
+    LoggerModule.forRoot({
+      serverLoggingUrl: '/rest/logs/client/web/',
+      level: NgxLoggerLevel.DEBUG,
+      serverLogLevel: NgxLoggerLevel.DEBUG
+    }),
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,

@@ -9,21 +9,43 @@ import {HttpClient} from '@angular/common/http';
 export class AdminControlPanelComponent implements OnInit {
 
   loggedGamesQty: number;
+  webClientLogLinesQty: number;
 
   constructor(protected http: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.http.get<number>('/rest/control-panel/logs/games/qty').subscribe(res => this.loggedGamesQty = res);
+    this.http.get<number>('/rest/logs/back/games/qty').subscribe(res => this.loggedGamesQty = res);
+    this.http.get<number>('/rest/logs/client/web/qty').subscribe(res => this.webClientLogLinesQty = res);
   }
 
-  drainLog(): void {
+  showUnfinishedGames(): void {
+    window.open('/rest/logs/back/games/open', '_blank');
+  }
+
+  downloadAllGames(): void {
+    window.open('/rest/logs/back/games/drain', '_blank');
+  }
+
+  downloadAllWebClientLogs(): void {
+    window.open('/rest/logs/client/web/drain', '_blank');
+  }
+
+  deleteAllGames(): void {
     if (confirm('This will delete logs from DB, are you sure?')) {
-      window.open('/control-panel/logs/games/drain', '_blank');
+      this.http.delete<void>('/rest/logs/back/games/delete').subscribe(res => {
+        alert('Logs Deleted');
+        this.ngOnInit();
+      });
     }
   }
 
-  showUnfinished(): void {
-    window.open('/control-panel/logs/games/open', '_blank');
+  deleteAllClientLogs(): void {
+    if (confirm('This will delete logs from DB, are you sure?')) {
+      this.http.delete<void>('/rest/logs/client/web/delete').subscribe(res => {
+        alert('Logs Deleted');
+        this.ngOnInit();
+      });
+    }
   }
 }

@@ -3,16 +3,21 @@ import {HighlightAnimation} from './highlight';
 import {DetailsAnimation} from './details';
 import {PhaserSettingsService} from '../../../phaser-settings.service';
 import {Card} from '../../../../model/card';
+import {NGXLogger} from 'ngx-logger';
+import {AppComponent} from '../../../../app.component';
 
 export class DiscardChoiceAnimation {
 
   private constructor() {
     // @ts-ignore
     this.settings = window.settingsService;
+    // @ts-ignore
+    this.logger = window.logger;
   }
 
   private static _INSTANCE: DiscardChoiceAnimation;
   private settings: PhaserSettingsService;
+  private logger: NGXLogger;
 
   public static getInstance(): DiscardChoiceAnimation {
     if (!this._INSTANCE) {
@@ -46,9 +51,9 @@ export class DiscardChoiceAnimation {
       this.drawDiscardDropZone(scene, playedCard.getModel());
 
       scene.input.on('drop', (pointer, gameObject, dropZone) => {
-        // console.debug('Drop Event occurred! Logging gameObject and dropZone');
-        // console.debug(gameObject.data.list);
-        // console.debug(dropZone.data.list);
+        this.logger.debug('Drop Event occurred! Logging gameObject and dropZone', AppComponent.SESSION_ID);
+        this.logger.debug(gameObject.data.list, AppComponent.SESSION_ID);
+        this.logger.debug(dropZone.data.list, AppComponent.SESSION_ID);
         if (dropZone.data.list.choice === 'DISCARD_ONE') {
           callback(gameObject.data.list.card);
         }

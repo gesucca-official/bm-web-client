@@ -7,6 +7,7 @@ import {BattleScene} from './scnenes/battle/battle-scene';
 import {Deck} from '../model/deck';
 import {Router} from '@angular/router';
 import {SessionService} from '../service/session.service';
+import {NGXLogger} from 'ngx-logger';
 
 @Component({
   selector: 'app-phaser-client',
@@ -22,7 +23,8 @@ export class PhaserClientComponent implements AfterViewInit {
     public sessionService: SessionService,
     protected websocketService: WebsocketService,
     protected gameService: GameService,
-    protected settingsService: PhaserSettingsService) {
+    protected settingsService: PhaserSettingsService,
+    protected logger: NGXLogger) {
   }
 
   ngAfterViewInit(): void {
@@ -30,11 +32,14 @@ export class PhaserClientComponent implements AfterViewInit {
   }
 
   joinGame(whichGame: { game: string, deck?: Deck }): void {
-    // see comment in battle scene
+    // this below is the most hazardous hack
+    // dunno how else I should inject angular services into phaser classes
     // @ts-ignore
     window.gameService = this.gameService;
     // @ts-ignore
     window.settingsService = this.settingsService;
+    // @ts-ignore
+    window.logger = this.logger;
 
     this.websocketService.joinGame(this.gameService.playerId, whichGame.game, (sdkEvent => {
       this.gameService.gameId = sdkEvent.body;

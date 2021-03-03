@@ -1,6 +1,6 @@
 <mat-card class="chooser-card">
   <mat-card-title class="smaller-title">
-    Logged Games
+    Games Back Log
   </mat-card-title>
   <mat-card-content>
     Games logged so far: {{loggedGamesQty}}
@@ -9,14 +9,43 @@
     <button mat-raised-button
             class="choice-button"
             color="primary"
-            (click)="showUnfinished(); $event.stopPropagation()">
-      Show Unfinished
+            (click)="showUnfinishedGames(); $event.stopPropagation()">
+      Show
     </button>
     <button mat-raised-button
             class="choice-button"
             color="primary"
-            (click)="drainLog(); $event.stopPropagation()">
-      Download All
+            (click)="downloadAllGames(); $event.stopPropagation()">
+      Download
+    </button>
+    <button mat-raised-button
+            class="choice-button"
+            color="warn"
+            (click)="deleteAllGames(); $event.stopPropagation()">
+      Clean
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-card class="chooser-card">
+  <mat-card-title class="smaller-title">
+    Web Client Log
+  </mat-card-title>
+  <mat-card-content>
+    Total Log Lines saved: {{webClientLogLinesQty}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+            class="choice-button"
+            color="primary"
+            (click)="downloadAllWebClientLogs(); $event.stopPropagation()">
+      Download
+    </button>
+    <button mat-raised-button
+            class="choice-button"
+            color="warn"
+            (click)="deleteAllClientLogs(); $event.stopPropagation()">
+      Clean
     </button>
   </mat-card-actions>
 </mat-card>
