@@ -5,15 +5,14 @@ import {UI_Opponent} from './model/ui-opponent';
 import {ResolvedMoveAnimation} from './animations/resolves-moves';
 import {UI_Player} from './model/ui-player';
 import {DiscardChoiceAnimation} from './animations/discard-choice';
-import {AppComponent} from '../../../app.component';
-import {NGXLogger} from 'ngx-logger';
+import {LogService} from '../../../service/log.service';
 
 export class BattleScene extends Phaser.Scene {
 
   public static KEY = 'battleScene';
   private readonly gameService: GameService;
   private readonly settingsService: PhaserSettingsService;
-  private readonly logger: NGXLogger;
+  private readonly logger: LogService;
 
   player: Phaser.GameObjects.Container;
   opponents: Map<string, Phaser.GameObjects.Container> = new Map<string, Phaser.GameObjects.Container>();
@@ -71,9 +70,9 @@ export class BattleScene extends Phaser.Scene {
       // TODO turn off details button while dragging
     });
     this.input.on('drop', (pointer, gameObject, dropZone) => {
-      this.logger.debug('Drop Event occurred! Logging gameObject and dropZone', AppComponent.SESSION_ID);
-      this.logger.debug(gameObject.data.list, AppComponent.SESSION_ID);
-      this.logger.debug(dropZone.data.list, AppComponent.SESSION_ID);
+      this.logger.debug('Drop Event occurred! Logging gameObject and dropZone');
+      this.logger.debug(gameObject.data.list);
+      this.logger.debug(dropZone.data.list);
       this.handleDropEvent(gameObject.data.list.card, dropZone.data.list.target);
     });
 

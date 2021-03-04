@@ -1,8 +1,7 @@
 import {UI_AbstractObject} from '../model/ui-abstract-object';
 import {PhaserSettingsService} from '../../../phaser-settings.service';
 import {UI_Item} from '../model/ui-item';
-import {NGXLogger} from 'ngx-logger';
-import {AppComponent} from '../../../../app.component';
+import {LogService} from '../../../../service/log.service';
 
 export class DetailsAnimation {
 
@@ -16,7 +15,7 @@ export class DetailsAnimation {
   private static _INSTANCE: DetailsAnimation;
 
   private settings: PhaserSettingsService;
-  private logger: NGXLogger;
+  private logger: LogService;
 
   // toggle behaviour of details methods, allowing them to listen for events (es. click to do/re click to cancel)
   private readonly detailsShownFor: Map<string, boolean> = new Map<string, boolean>();
@@ -44,9 +43,8 @@ export class DetailsAnimation {
     } else {
       this.detailsShownFor.set(objId, !this.detailsShownFor.get(objId));
     }
-    this.logger.debug('Toggled details view for Obj ' + objId + ': toggle is now ' + this.detailsShownFor.get(objId),
-      AppComponent.SESSION_ID);
-    this.logger.debug(this.detailsShownFor, AppComponent.SESSION_ID);
+    this.logger.debug('Toggled details view for Obj ' + objId + ': toggle is now ' + this.detailsShownFor.get(objId));
+    this.logger.debug(this.detailsShownFor);
   }
 
   public focusDetails(obj: UI_AbstractObject, scene: Phaser.Scene): void {
@@ -58,10 +56,10 @@ export class DetailsAnimation {
         .setDepth(1)
         .setInteractive(); // this prevents things underneath it to be clicked
       this.blurredBackground.set(obj.getId(), bg);
-      this.logger.debug('Focused Obj ' + obj.getId() + ' with blurred background', AppComponent.SESSION_ID);
+      this.logger.debug('Focused Obj ' + obj.getId() + ' with blurred background');
     } else {
       this.blurredBackground.get(obj.getId()).destroy();
-      this.logger.debug('Destroyed blurred Background created for Obj ' + obj.getId(), AppComponent.SESSION_ID);
+      this.logger.debug('Destroyed blurred Background created for Obj ' + obj.getId());
     }
   }
 
@@ -73,16 +71,16 @@ export class DetailsAnimation {
         .setFontFamily('Electrolize')
         .setColor('#000000').setDepth(100);
       this.summary.set(obj.getId(), summary);
-      this.logger.debug('Summary shown for Obj ' + obj.getId(), AppComponent.SESSION_ID);
+      this.logger.debug('Summary shown for Obj ' + obj.getId());
     } else {
       this.summary.get(obj.getId()).destroy();
-      this.logger.debug('Destroyed Summary of Obj ' + obj.getId(), AppComponent.SESSION_ID);
+      this.logger.debug('Destroyed Summary of Obj ' + obj.getId());
     }
   }
 
   public zoomObjForDetails(obj: UI_AbstractObject, scene: Phaser.Scene): void {
     if (this.detailsShownFor.get(obj.getId())) {
-      this.logger.debug('Placing zoomed Obj ' + obj.getId(), AppComponent.SESSION_ID);
+      this.logger.debug('Placing zoomed Obj ' + obj.getId());
       obj.getAnimationTargets().forEach(target => {
         target.setDepth(target.depth + 5);
         this.originPosOf.set(target.name, [target.x, target.y]);
@@ -98,11 +96,11 @@ export class DetailsAnimation {
           scale: 1.5
         });
         this.tween.set(obj.getId() + '.' + target.name, tween);
-        this.logger.debug('Animation Target: ' + target.name, AppComponent.SESSION_ID);
-        this.logger.debug('Animation Target X: ' + target.x, AppComponent.SESSION_ID);
-        this.logger.debug('Whole Obj X: ' + obj.getX(), AppComponent.SESSION_ID);
-        this.logger.debug('Animation Target Y: ' + target.y, AppComponent.SESSION_ID);
-        this.logger.debug('Whole Obj Y: ' + obj.getY(), AppComponent.SESSION_ID);
+        this.logger.debug('Animation Target: ' + target.name);
+        this.logger.debug('Animation Target X: ' + target.x);
+        this.logger.debug('Whole Obj X: ' + obj.getX());
+        this.logger.debug('Animation Target Y: ' + target.y);
+        this.logger.debug('Whole Obj Y: ' + obj.getY());
       });
       obj.getInteractiveAfterAnimation().forEach(i => i.setInteractive());
     } else {
