@@ -89,7 +89,8 @@ import {LoggerModule, NgxLoggerLevel} from 'ngx-logger';
     LoggerModule.forRoot({
       serverLoggingUrl: '/rest/logs/client/web/',
       level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: NgxLoggerLevel.DEBUG
+      serverLogLevel: NgxLoggerLevel.DEBUG,
+      timestampFormat: 'YYYY-MM-dd_HH:mm:ss.SSS',
     }),
     MatToolbarModule,
     MatButtonModule,
