@@ -23,17 +23,39 @@
       concepts and mechanics never seen before.
     </p>
     <p>
-      For now, you can help me sponsoring a virtual cup of coffee, or just by telling me if you discover some weird
-      behaviour.
+      This whole thing is buggy as hell, but luckily everything here is Open Source. You can check this out on GitHub
+      and hopefully contribute, if you would. Beware the lack of license, tho: this is <i>mine</i> and not some hippie
+      GNU project.
+    </p>
+    <p>
+      If you prefer, you can help sponsoring a virtual cup of coffee, or just by telling me if you discover some
+      weird behaviour.
     </p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button color="primary" onClick="window.location.href = 'mailto:gesucca.official@gmail.com'">
-      Send me a Mail
+      Mail
     </button>
     <button mat-raised-button color="primary" onClick="window.open('https://www.paypal.com/paypalme/gesucca/')">
-      Support This
+      Donate
     </button>
+    <!--this thing has a margin coming from somewhere...-->
+    <button mat-raised-button color="primary"
+            style="margin-left: 0"
+            [matMenuTriggerFor]="repos">
+      GitHub
+    </button>
+    <mat-menu #repos="matMenu">
+      <button mat-menu-item (click)="gitHubProfileLink()">
+        <i class="fab fa-github"></i> Profile
+      </button>
+      <button mat-menu-item (click)="webClientGitHubLink()">
+        <i class="fab fa-github"></i> Web Client Repository
+      </button>
+      <button mat-menu-item (click)="serverGitHubLink()">
+        <i class="fab fa-github"></i> Server Repository
+      </button>
+    </mat-menu>
   </mat-card-actions>
 </mat-card>
 

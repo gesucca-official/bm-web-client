@@ -23,5 +23,17 @@ export class HomeComponent implements OnInit {
   instagramLink(): void {
     window.document.location.href = 'https://www.instagram.com/gesucca/';
   }
+
+  gitHubProfileLink(): void {
+    window.document.location.href = 'https://github.com/gesucca-official';
+  }
+
+  webClientGitHubLink(): void {
+    window.document.location.href = 'https://github.com/gesucca-official/bm-web-client';
+  }
+
+  serverGitHubLink(): void {
+    window.document.location.href = 'https://github.com/gesucca-official/bm-server';
+  }
 }
 

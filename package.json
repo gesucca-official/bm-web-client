@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~11.2.1",
     "@angular/platform-browser-dynamic": "~11.2.1",
     "@angular/router": "~11.2.1",
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "@ion-phaser/core": "^1.2.3",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.6",
